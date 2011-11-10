@@ -1,0 +1,1 @@
+Para información acerca de descarga e instalación ir a la sección [Wiki](https://github.com/swarzesherz/CleanHTML/wiki)
