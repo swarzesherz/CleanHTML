@@ -21,7 +21,7 @@ echo "Buscando archivos html dentro de la carpeta body"
 clear
 #Entramos al directorio de trabajo a buscar los archivosS
 cd "$WORKPATH"
-for i in $(find ./ | egrep "\/body\/(.*)\.htm$"); do
+for i in $(find ./ | egrep "\/body\/(.*)\.(htm|html)$"); do
 	FILE_DIR=`dirname "$i"`
 	FIME_NAME=`echo $i | sed "s:$FILE_DIR\/::g"`
 	echo "Limpiando contenido del archivo $FIME_NAME"
@@ -158,9 +158,9 @@ fi
 #Reemplazamos etiquetas que usa tidy
 	sed -e 's:\[:\&#91;:g' \
 	-e 's:\]:\&#93;:g' \
-	-e 's:\(\&ndash;\|–\):\&#150;:g' \
+	-e 's:\(\&ndash;\|–\|\&#8211;\):\&#150;:g' \
 	-e 's:\(-\):\&#45;:g' \
-	-e 's:\(\&mdash;\|—\):\&#151;:g' \
+	-e 's:\(\&mdash;\|—\|\&#8212;\):\&#151;:g' \
 	-e 's:µ:\&#181;:g' \
 	-e 's:\ß:\&#946;:g' \
 	-e 's:</\?blockquote[^>]*>::g' \
