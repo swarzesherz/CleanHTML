@@ -217,6 +217,7 @@ fi
 	-e 's:\&thetasym;:\&#977;:g' \
 	-e 's:\&upsih;:\&#978;:g' \
 	-e 's:\&piv;:\&#982;:g' \
+	-e 's:\&hellip;:\.\.\.:g' \
 	$i > ${i}.bak
 	mv ${i}.bak $i
 #Por omision agregamos las etiquetas <font> estandar
