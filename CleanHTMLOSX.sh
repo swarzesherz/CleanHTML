@@ -33,17 +33,19 @@ else
 fi
 #Quitando saltos de línea
 	tr '\n\r' ' ' < $i > ${i}.bak
+	mv ${i}.bak $i
+	tr '\r' ' ' < $i > ${i}.bak 
 #Limpiando HTML
 	cat ${i}.bak | \
-	sed -e 's:\ >:>:g' \
+	sed -E -e 's:\ >:>:g' \
 	-e 's:</\?[A-Z][A-Z0-9]*[^<>]*>:\L&:g' \
 	-e 's:<!DOCTYPE[^>]*>::g' \
 	-e 's:<html[^>]*>:<html>:g' \
 	-e 's:<body[^>]*>:<body>:g' \
 	-e 's:<!--.*\?-->::g' \
 	-e 's:<meta[^>]*>::g' \
-	-e 's:<style[^>]*>\(.*\?\)<\/style>::g' \
-	-e 's:<script[^>]*>\(.*\?\)<\/script>::g' \
+	-e 's:<style[^>]*>.*<\/style>::g' \
+	-e 's:<script[^>]*>.*<\/script>::g' \
 	-e 's:<script[^>]*\/>::g' \
 	-e 's:<link[^>]*>::g' \
 	-e 's:class=\"[^\"]*\"::g' \
