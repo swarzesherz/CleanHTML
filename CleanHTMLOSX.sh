@@ -23,20 +23,20 @@ clear
 cd "$WORKPATH"
 for i in $(find ./ | egrep "\/body\/(.*)\.(htm|html)$"); do
 	FILE_DIR=`dirname "$i"`
-	FIME_NAME=`echo $i | sed "s:$FILE_DIR\/::g"`
+	FIME_NAME=`echo "$i" | sed "s:$FILE_DIR\/::g"`
 	echo "Limpiando contenido del archivo $FIME_NAME"
 #Verificando codificación del arhivo
-if file -i $i | egrep "charset=utf\-8" > /dev/null; then
-	$WORKPATH/bin/tidy -config $WORKPATH/etc/tidyUTF8 -m "$i"
+if file -i "$i" | egrep "charset=utf\-8" > /dev/null; then
+	"$WORKPATH/bin/tidy" -config "$WORKPATH/etc/tidyUTF8" -m "$i"
 else
-	$WORKPATH/bin/tidy -config $WORKPATH/etc/tidy -m "$i"
+	"$WORKPATH/bin/tidy" -config "$WORKPATH/etc/tidy" -m "$i"
 fi
 #Quitando saltos de línea
-	tr '\n\r' ' ' < $i > ${i}.bak
-	mv ${i}.bak $i
-	tr '\r' ' ' < $i > ${i}.bak 
+	tr '\n\r' ' ' < "$i" > "${i}.bak"
+	mv "${i}.bak" "$i"
+	tr '\r' ' ' < "$i" > "${i}.bak" 
 #Limpiando HTML
-	cat ${i}.bak | \
+	cat "${i}.bak" | \
 	sed -E -e 's:\ >:>:g' \
 	-e 's:</\?[A-Z][A-Z0-9]*[^<>]*>:\L&:g' \
 	-e 's:<!DOCTYPE[^>]*>::g' \
@@ -135,16 +135,16 @@ fi
 	-e 's:\ß:\&#946;:g' \
 	-e 's:\&#64258;:fl:g' \
 	-e 's:\&#64257;:fi:g' \
-	-e '/^$/d' > $i
-	rm -rf ${i}.bak
+	-e '/^$/d' > "$i"
+	rm -rf "${i}.bak"
 #Limpiar etiquetas <font> inecesarias de acuerdo a la condición inicial
 	while $FONT; do
 		echo
 		read -p "Desea limpiar las etiquetas <font> del archivo \"$FIME_NAME\", al aceptar eliminara todas las etiquetas <font> del HTML: " yn
 			case $yn in
 			si)
-				sed -e 's:</\?font[^<>]*>::g' $i > ${i}.bak
-				mv ${i}.bak $i
+				sed -e 's:</\?font[^<>]*>::g' "$i" > "${i}.bak"
+				mv "${i}.bak" "$i"
 				break;;
 			no)
 				break;;
@@ -152,10 +152,10 @@ fi
 		esac
 	done
 #Por omisión limpiamos las etiquetas <font> basura 
-	sed -e 's:</\?font[^<>]*>::g' $i > ${i}.bak
-	mv ${i}.bak $i
+	sed -e 's:</\?font[^<>]*>::g' "$i" > "${i}.bak"
+	mv "${i}.bak" "$i"
 #Identando condigo HTML
-	$WORKPATH/bin/tidy -config $WORKPATH/etc/tidy -m -i "$i"
+	"$WORKPATH/bin/tidy" -config "$WORKPATH/etc/tidy" -m -i "$i"
 #Reemplazamos etiquetas que usa tidy
 	sed -e 's:\[:\&#91;:g' \
 	-e 's:\]:\&#93;:g' \
@@ -218,11 +218,11 @@ fi
 	-e 's:\&upsih;:\&#978;:g' \
 	-e 's:\&piv;:\&#982;:g' \
 	-e 's:\&hellip;:\.\.\.:g' \
-	$i > ${i}.bak
-	mv ${i}.bak $i
+	"$i" > "${i}.bak"
+	mv "${i}.bak" "$i"
 #Por omision agregamos las etiquetas <font> estandar
-	sed -e 's:<p>:<p align=\"justify\">:g' -e 's:<p[^>]*>:&<font face=\"verdana\" size=\"2\">:g' -e 's:<\/p>:<\/font><\/p>:g' $i > ${i}.bak
-	mv ${i}.bak $i
+	sed -e 's:<p>:<p align=\"justify\">:g' -e 's:<p[^>]*>:&<font face=\"verdana\" size=\"2\">:g' -e 's:<\/p>:<\/font><\/p>:g' "$i" > "${i}.bak"
+	mv "${i}.bak" "$i"
 #Limpiando pantalla
 #	clear
 done
