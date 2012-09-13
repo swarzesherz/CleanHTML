@@ -1,0 +1,12 @@
+indent: auto
+indent-spaces: 4
+wrap: 0
+tidy-mark: false
+show-warnings: false
+show-errors: 6
+quiet: true
+quote-marks: false
+numeric-entities: false
+doctype: "-//W3C//DTD HTML 4.01//EN"
+input-encoding: utf8
+preserve-entities: true
