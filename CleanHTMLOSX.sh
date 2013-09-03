@@ -58,8 +58,8 @@ fi
 	-e 's:<div[^>]*>:<p>:g' \
 	-e 's:<\/div>:<\/p>:g' \
 	-e 's:^<div><\/div>$:<p>\&nbsp;<\/p>:g' \
-	-e 's:<p><\/p>:<p>\&nbsp;<\/p>:g' \
-	-e 's:<p>:<p align=\"justify\">:g' \
+	-e 's:<p[^>]*>:<p align=\"justify\">:g' \
+	-e 's:<p[^>]*><\/p>:<p>\&nbsp;<\/p>:g' \
 	-e 's:</\?td[^>]*>::g' \
 	-e 's:</\?th[^>]*>::g' \
 	-e 's:</\?tr[^>]*>::g' \
@@ -221,7 +221,10 @@ fi
 	"$i" > "${i}.bak"
 	mv "${i}.bak" "$i"
 #Por omision agregamos las etiquetas <font> estandar
-	sed -e 's:<p>:<p align=\"justify\">:g' -e 's:<p[^>]*>:&<font face=\"verdana\" size=\"2\">:g' -e 's:<\/p>:<\/font><\/p>:g' "$i" > "${i}.bak"
+	sed -e 's:<p>:<p align=\"justify\">:g' \
+	-e 's:<p[^>]*>:&<font face=\"verdana\" size=\"2\">:g' \
+	-e 's:<\/p>:<\/font><\/p>:g' "$i" > "${i}.bak" \
+	-e 's:<p[^>]*><font[^>]*>\&nbsp;</font></p>:<p>\&nbsp;</p>:g'
 	mv "${i}.bak" "$i"
 #Limpiando pantalla
 #	clear

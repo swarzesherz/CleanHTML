@@ -27,13 +27,14 @@ for i in $(find ./ | egrep "\/body\/(.*)\.(htm|html)$"); do
 	echo "Limpiando contenido del archivo $FIME_NAME"
 #Verificando codificación del arhivo
 if file -i "$i" | egrep "charset=utf\-8" > /dev/null; then
-	tidy -config /etc/tidyUTF8 -m "$i"
+	tidy -config "$WORKPATH/etc/tidyUTF8" -m "$i"
 else
-	tidy -config /etc/tidy -m "$i"
-fi	
+	tidy -config "$WORKPATH/etc/tidy" -m "$i"
+fi
 #Quitando saltos de línea
-#	cat $i | xargs echo > ${i}.bak
-	sed ':a;N;$!ba;s/\n//g' "$i" > "${i}.bak"
+	tr '\n\r' ' ' < "$i" > "${i}.bak"
+	mv "${i}.bak" "$i"
+	tr '\r' ' ' < "$i" > "${i}.bak" 
 #Limpiando HTML
 	cat "${i}.bak" | \
 	sed -e 's:\ >:>:g' \
@@ -57,8 +58,8 @@ fi
 	-e 's:<div[^>]*>:<p>:g' \
 	-e 's:<\/div>:<\/p>:g' \
 	-e 's:^<div><\/div>$:<p>\&nbsp;<\/p>:g' \
-	-e 's:<p><\/p>:<p>\&nbsp;<\/p>:g' \
-	-e 's:<p>:<p align=\"justify\">:g' \
+	-e 's:<p[^>]*>:<p align=\"justify\">:g' \
+	-e 's:<p[^>]*><\/p>:<p>\&nbsp;<\/p>:g' \
 	-e 's:</\?td[^>]*>::g' \
 	-e 's:</\?th[^>]*>::g' \
 	-e 's:</\?tr[^>]*>::g' \
@@ -154,7 +155,7 @@ fi
 	sed -e 's:</\?font[^<>]*>::g' "$i" > "${i}.bak"
 	mv "${i}.bak" "$i"
 #Identando condigo HTML
-	tidy -config /etc/tidy -m -i "$i"
+	tidy -config "$WORKPATH/etc/tidy" -m -i "$i"
 #Reemplazamos etiquetas que usa tidy
 	sed -e 's:\[:\&#91;:g' \
 	-e 's:\]:\&#93;:g' \
@@ -220,7 +221,10 @@ fi
 	"$i" > "${i}.bak"
 	mv "${i}.bak" "$i"
 #Por omision agregamos las etiquetas <font> estandar
-	sed -e 's:<p>:<p align=\"justify\">:g' -e 's:<p[^>]*>:&<font face=\"verdana\" size=\"2\">:g' -e 's:<\/p>:<\/font><\/p>:g' "$i" > "${i}.bak"
+	sed -e 's:<p>:<p align=\"justify\">:g' \
+	-e 's:<p[^>]*>:&<font face=\"verdana\" size=\"2\">:g' \
+	-e 's:<\/p>:<\/font><\/p>:g' "$i" > "${i}.bak" \
+	-e 's:<p[^>]*><font[^>]*>\&nbsp;</font></p>:<p>\&nbsp;</p>:g'
 	mv "${i}.bak" "$i"
 #Limpiando pantalla
 #	clear
