@@ -38,11 +38,11 @@ fi
 #Limpiando HTML
 	cat "${i}.bak" | \
 	sed -E -e 's:\ >:>:g' \
-	-e 's:</\?[A-Z][A-Z0-9]*[^<>]*>:\L&:g' \
+	-e 's:</?[A-Z][A-Z0-9]*[^<>]*>:\L&:g' \
 	-e 's:<!DOCTYPE[^>]*>::g' \
 	-e 's:<html[^>]*>:<html>:g' \
 	-e 's:<body[^>]*>:<body>:g' \
-	-e 's:<!--.*\?-->::g' \
+	-e 's:<!--.*-->::g' \
 	-e 's:<meta[^>]*>::g' \
 	-e 's:<style[^>]*>.*<\/style>::g' \
 	-e 's:<script[^>]*>.*<\/script>::g' \
@@ -50,80 +50,82 @@ fi
 	-e 's:<link[^>]*>::g' \
 	-e 's:class=\"[^\"]*\"::g' \
 	-e 's:style=\"[^\"]*\"::g' \
-	-e 's:</\?h[0-9][^>]*>::g' \
-	-e 's:</\?dir[^>]*>::g' \
-	-e 's:</\?o\:p[^>]*>::g' \
-	-e 's:</\?span[^>]*>::g' \
-	-e 's:</\?div[^>]*>::g' \
+	-e 's:</?h[0-9][^>]*>::g' \
+	-e 's:</?dir[^>]*>::g' \
+	-e 's:</?o\:p[^>]*>::g' \
+	-e 's:</?span[^>]*>::g' \
+	-e 's:</?div[^>]*>::g' \
+	-e 's:</?font[^>]*>::g' \
 	-e 's:<div[^>]*>:<p>:g' \
 	-e 's:<\/div>:<\/p>:g' \
 	-e 's:^<div><\/div>$:<p>\&nbsp;<\/p>:g' \
-	-e 's:<p[^>]*>:<p align=\"justify\">:g' \
+	-e 's:(<p[^>]*( align=".+")[^>]*>)|(<p[^>]*>):<p\2>:g' \
+	-e 's:<p>:<p align=\"justify\">:g' \
 	-e 's:<p[^>]*><\/p>:<p>\&nbsp;<\/p>:g' \
-	-e 's:</\?td[^>]*>::g' \
-	-e 's:</\?th[^>]*>::g' \
-	-e 's:</\?tr[^>]*>::g' \
-	-e 's:</\?table[^>]*>::g' \
+	-e 's:</?td[^>]*>::g' \
+	-e 's:</?th[^>]*>::g' \
+	-e 's:</?tr[^>]*>::g' \
+	-e 's:</?table[^>]*>::g' \
 	-e 's:<strong[^>]*>:<b>:g' \
 	-e 's:<\/strong>:<\/b>:g' \
 	-e 's:<em[^>]*>:<i>:g' \
 	-e 's:<\/em>:<\/i>:g' \
 	-e 's:\[:\&#91;:g' \
 	-e 's:\]:\&#93;:g' \
-	-e 's:\(\&ndash;\|–\):\&#150;:g' \
-	-e 's:\(\&mdash;\|—\):\&#151;:g' \
-	-e "s:\(‘\|’\):':g" \
-	-e 's:\(\&ldquo;\|\&rdquo;\|\&quot;\|“\|”\):":g' \
+	-e 's:(\&ndash;\|–):\&#150;:g' \
+	-e 's:(\&mdash;\|—):\&#151;:g' \
+	-e "s:(‘\|’):':g" \
+	-e 's:(\&ldquo;\|\&rdquo;\|\&quot;\|“\|”):":g' \
 	-e 's:\\ &\ :\\ &amp;\ :g' \
 	-e 's:µ:\&#181;:g' \
 	-e 's:ª:\&ordf;:g' \
 	-e 's:º:\&ordm;:g' \
-	-e 's:\(\&#225;\|\á\):\&aacute;:g' \
-	-e 's:\(\&#233;\|\é\):\&eacute;:g' \
-	-e 's:\(\&#237;\|\í\):\&iacute;:g' \
-	-e 's:\(\&#243;\|\ó\):\&oacute;:g' \
-	-e 's:\(\&#250;\|\ú\):\&uacute;:g' \
-	-e 's:\(\&#193;\|\Á\):\&Aacute;:g' \
-	-e 's:\(\&#201;\|\É\):\&Eacute;:g' \
-	-e 's:\(\&#205;\|\Í\):\&Iacute;:g' \
-	-e 's:\(\&#211;\|\Ó\):\&Oacute;:g' \
-	-e 's:\(\&#218;\|\Ú\):\&Uacute;:g' \
-	-e 's:\(\&#226;\|\â\):\&acirc;:g' \
-	-e 's:\(\&#234;\|\ê\):\&ecirc;:g' \
-	-e 's:\(\&#238;\|\î\):\&icirc;:g' \
-	-e 's:\(\&#244;\|\ô\):\&ocirc;:g' \
-	-e 's:\(\&#251;\|\û\):\&ucirc;:g' \
-	-e 's:\(\&#194;\|\Â\):\&Acirc;:g' \
-	-e 's:\(\&#202;\|\Ê\):\&Ecirc;:g' \
-	-e 's:\(\&#206;\|\Î\):\&Icirc;:g' \
-	-e 's:\(\&#212;\|\Ô\):\&Ocirc;:g' \
-	-e 's:\(\&#219;\|\Û\):\&Ucirc;:g' \
-	-e 's:\(\&#224;\|\à\):\&agrave;:g' \
-	-e 's:\(\&#232;\|\è\):\&egrave;:g' \
-	-e 's:\(\&#236;\|\ì\):\&igrave;:g' \
-	-e 's:\(\&#242;\|\ò\):\&ograve;:g' \
-	-e 's:\(\&#249;\|\ù\):\&ugrave;:g' \
-	-e 's:\(\&#192;\|\À\):\&Agrave;:g' \
-	-e 's:\(\&#200;\|\È\):\&Egrave;:g' \
-	-e 's:\(\&#204;\|\Ì\):\&Igrave;:g' \
-	-e 's:\(\&#210;\|\Ò\):\&Ograve;:g' \
-	-e 's:\(\&#217;\|\Ù\):\&Ugrave;:g' \
-	-e 's:\(\&#228;\|\ä\):\&auml;:g' \
-	-e 's:\(\&#235;\|\ë\):\&euml;:g' \
-	-e 's:\(\&#239;\|\ï\):\&iuml;:g' \
-	-e 's:\(\&#246;\|\ö\):\&ouml;:g' \
-	-e 's:\(\&#252;\|\ü\):\&uuml;:g' \
-	-e 's:\(\&#196;\|\Ä\):\&Auml;:g' \
-	-e 's:\(\&#203;\|\Ë\):\&Euml;:g' \
-	-e 's:\(\&#207;\|\Ï\):\&Iuml;:g' \
-	-e 's:\(\&#214;\|\Ö\):\&Ouml;:g' \
-	-e 's:\(\&#220;\|\Ü\):\&Uuml;:g' \
-	-e 's:\(\&#227;\|\ã\):\&atilde;:g' \
-	-e 's:\(\&#245;\|\õ\):\&otilde;:g' \
-	-e 's:\(\&#195;\|\Ã\):\&Atilde;:g' \
-	-e 's:\(\&#213;\|\Õ\):\&Otilde;:g' \
-	-e 's:\(\&#241;\|\ñ\):\&ntilde;:g' \
-	-e 's:\(\&#209;\|\Ñ\):\&Ntilde;:g' \
+	-e 's:(\&#225;\|\á):\&aacute;:g' \
+	-e 's:(\&#233;\|\é):\&eacute;:g' \
+	-e 's:(\&#237;\|\í):\&iacute;:g' \
+	-e 's:(\&#243;\|\ó):\&oacute;:g' \
+	-e 's:(\&#250;\|\ú):\&uacute;:g' \
+	-e 's:(\&#193;\|\Á):\&Aacute;:g' \
+	-e 's:(\&#201;\|\É):\&Eacute;:g' \
+	-e 's:(\&#205;\|\Í):\&Iacute;:g' \
+	-e 's:(\&#211;\|\Ó):\&Oacute;:g' \
+	-e 's:(\&#218;\|\Ú):\&Uacute;:g' \
+	-e 's:(\&#226;\|\â):\&acirc;:g' \
+	-e 's:(\&#234;\|\ê):\&ecirc;:g' \
+	-e 's:(\&#238;\|\î):\&icirc;:g' \
+	-e 's:(\&#244;\|\ô):\&ocirc;:g' \
+	-e 's:(\&#251;\|\û):\&ucirc;:g' \
+	-e 's:(\&#194;\|\Â):\&Acirc;:g' \
+	-e 's:(\&#202;\|\Ê):\&Ecirc;:g' \
+	-e 's:(\&#206;\|\Î):\&Icirc;:g' \
+	-e 's:(\&#212;\|\Ô):\&Ocirc;:g' \
+	-e 's:(\&#219;\|\Û):\&Ucirc;:g' \
+	-e 's:(\&#224;\|\à):\&agrave;:g' \
+	-e 's:(\&#232;\|\è):\&egrave;:g' \
+	-e 's:(\&#236;\|\ì):\&igrave;:g' \
+	-e 's:(\&#242;\|\ò):\&ograve;:g' \
+	-e 's:(\&#249;\|\ù):\&ugrave;:g' \
+	-e 's:(\&#192;\|\À):\&Agrave;:g' \
+	-e 's:(\&#200;\|\È):\&Egrave;:g' \
+	-e 's:(\&#204;\|\Ì):\&Igrave;:g' \
+	-e 's:(\&#210;\|\Ò):\&Ograve;:g' \
+	-e 's:(\&#217;\|\Ù):\&Ugrave;:g' \
+	-e 's:(\&#228;\|\ä):\&auml;:g' \
+	-e 's:(\&#235;\|\ë):\&euml;:g' \
+	-e 's:(\&#239;\|\ï):\&iuml;:g' \
+	-e 's:(\&#246;\|\ö):\&ouml;:g' \
+	-e 's:(\&#252;\|\ü):\&uuml;:g' \
+	-e 's:(\&#196;\|\Ä):\&Auml;:g' \
+	-e 's:(\&#203;\|\Ë):\&Euml;:g' \
+	-e 's:(\&#207;\|\Ï):\&Iuml;:g' \
+	-e 's:(\&#214;\|\Ö):\&Ouml;:g' \
+	-e 's:(\&#220;\|\Ü):\&Uuml;:g' \
+	-e 's:(\&#227;\|\ã):\&atilde;:g' \
+	-e 's:(\&#245;\|\õ):\&otilde;:g' \
+	-e 's:(\&#195;\|\Ã):\&Atilde;:g' \
+	-e 's:(\&#213;\|\Õ):\&Otilde;:g' \
+	-e 's:(\&#241;\|\ñ):\&ntilde;:g' \
+	-e 's:(\&#209;\|\Ñ):\&Ntilde;:g' \
 	-e 's:\æ:ae:g' \
 	-e 's:\Æ:AE:g' \
 	-e 's:\Œ:OE:g' \
@@ -143,7 +145,7 @@ fi
 		read -p "Desea limpiar las etiquetas <font> del archivo \"$FIME_NAME\", al aceptar eliminara todas las etiquetas <font> del HTML: " yn
 			case $yn in
 			si)
-				sed -e 's:</\?font[^<>]*>::g' "$i" > "${i}.bak"
+				sed -e 's:</?font[^<>]*>::g' "$i" > "${i}.bak"
 				mv "${i}.bak" "$i"
 				break;;
 			no)
@@ -152,16 +154,16 @@ fi
 		esac
 	done
 #Por omisión limpiamos las etiquetas <font> basura 
-	sed -e 's:</\?font[^<>]*>::g' "$i" > "${i}.bak"
+	sed -e 's:</?font[^<>]*>::g' "$i" > "${i}.bak"
 	mv "${i}.bak" "$i"
 #Identando condigo HTML
 	"$WORKPATH/bin/tidy" -config "$WORKPATH/etc/tidy" -m -i "$i"
 #Reemplazamos etiquetas que usa tidy
-	sed -e 's:\[:\&#91;:g' \
+	sed -E -e 's:\[:\&#91;:g' \
 	-e 's:\]:\&#93;:g' \
-	-e 's:\(\&ndash;\|–\|\&#8211;\):\&#150;:g' \
-	-e 's:\(-\):\&#45;:g' \
-	-e 's:\(\&mdash;\|—\|\&#8212;\):\&#151;:g' \
+	-e 's:(\&ndash;\|–\|\&#8211;):\&#150;:g' \
+	-e 's:(-):\&#45;:g' \
+	-e 's:(\&mdash;\|—\|\&#8212;):\&#151;:g' \
 	-e 's:µ:\&#181;:g' \
 	-e 's:\ß:\&#946;:g' \
 	-e 's:\ \ \ \ :	:g' \
@@ -223,8 +225,9 @@ fi
 #Por omision agregamos las etiquetas <font> estandar
 	sed -e 's:<p>:<p align=\"justify\">:g' \
 	-e 's:<p[^>]*>:&<font face=\"verdana\" size=\"2\">:g' \
-	-e 's:<\/p>:<\/font><\/p>:g' "$i" > "${i}.bak" \
-	-e 's:<p[^>]*><font[^>]*>\&nbsp;</font></p>:<p>\&nbsp;</p>:g'
+	-e 's:<\/p>:<\/font><\/p>:g'\
+	-e 's:<p[^>]*><font[^>]*>\&nbsp;</font></p>:<p>\&nbsp;</p>:g' \
+	"$i" > "${i}.bak" 
 	mv "${i}.bak" "$i"
 #Limpiando pantalla
 #	clear
