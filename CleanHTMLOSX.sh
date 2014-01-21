@@ -25,6 +25,9 @@ for i in $(find ./ | egrep "\/body\/(.*)\.(htm|html)$"); do
 	FILE_DIR=`dirname "$i"`
 	FIME_NAME=`echo "$i" | sed "s:$FILE_DIR\/::g"`
 	echo "Limpiando contenido del archivo $FIME_NAME"
+#Asignando permisos de ejecucion
+chmod +x "$WORKPATH/bin/tidy"
+chmod +x "$WORKPATH/bin/tab2space"
 #Verificando codificación del arhivo
 if file -i "$i" | egrep "charset=utf\-8" > /dev/null; then
 	"$WORKPATH/bin/tidy" -config "$WORKPATH/etc/tidyUTF8" -m "$i"
@@ -59,7 +62,7 @@ fi
 	-e 's:<div[^>]*>:<p>:g' \
 	-e 's:<\/div>:<\/p>:g' \
 	-e 's:^<div><\/div>$:<p>\&nbsp;<\/p>:g' \
-	-e 's:(<p[^>]*( align=".+")[^>]*>)|(<p[^>]*>):<p\2>:g' \
+	-e 's:(<p[^>]*( align=".+?")[^>]*>)|(<p[^>]*>):<p\2>:g' \
 	-e 's:<p>:<p align=\"justify\">:g' \
 	-e 's:<p[^>]*><\/p>:<p>\&nbsp;<\/p>:g' \
 	-e 's:</?td[^>]*>::g' \
@@ -223,7 +226,9 @@ fi
 	"$i" > "${i}.bak"
 	mv "${i}.bak" "$i"
 #Por omision agregamos las etiquetas <font> estandar
-	sed -e 's:<p>:<p align=\"justify\">:g' \
+	sed -E -e 's:<!DOCTYPE[^>]*>::g' \
+	-e 's:(<p[^>]*( align=".+?")[^>]*>)|(<p[^>]*>):<p\2>:g' \
+	-e 's:<p>:<p align=\"justify\">:g' \
 	-e 's:<p[^>]*>:&<font face=\"verdana\" size=\"2\">:g' \
 	-e 's:<\/p>:<\/font><\/p>:g'\
 	-e 's:<p[^>]*><font[^>]*>\&nbsp;</font></p>:<p>\&nbsp;</p>:g' \
