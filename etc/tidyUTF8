@@ -9,4 +9,5 @@ quote-marks: false
 numeric-entities: false
 doctype: "-//W3C//DTD HTML 4.01//EN"
 input-encoding: utf8
+enclose-block-text: true
 preserve-entities: true
