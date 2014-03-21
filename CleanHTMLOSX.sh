@@ -227,6 +227,7 @@ fi
 	mv "${i}.bak" "$i"
 #Por omision agregamos las etiquetas <font> estandar
 	sed -E -e 's:<!DOCTYPE[^>]*>::g' \
+	-e 's:</?font[^<>]*>::g' \
 	-e 's:(<p[^>]*( align="[^"]+")[^>]*>)|(<p[^>]*>):<p\2>:g' \
 	-e 's:<p>:<p align=\"justify\">:g' \
 	-e 's:<p[^>]*>:&<font face=\"verdana\" size=\"2\">:g' \
