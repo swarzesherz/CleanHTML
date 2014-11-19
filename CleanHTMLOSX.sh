@@ -45,7 +45,7 @@ fi
 	-e 's:<!DOCTYPE[^>]*>::g' \
 	-e 's:<html[^>]*>:<html>:g' \
 	-e 's:<body[^>]*>:<body>:g' \
-	-e 's:<!--.*-->::g' \
+	-e 's:<!--.[^-]-->::g' \
 	-e 's:<meta[^>]*>::g' \
 	-e 's:<style[^>]*>.*<\/style>::g' \
 	-e 's:<script[^>]*>.*<\/script>::g' \
@@ -69,12 +69,13 @@ fi
 	-e 's:<\/strong>:<\/b>:g' \
 	-e 's:<em[^>]*>:<i>:g' \
 	-e 's:<\/em>:<\/i>:g' \
+	-e 's:(</?[a-z][a-z0-9]*[^<>]*) (id|name)="[^"]*"([^<>]*>):\1\3:g' \
 	-e 's:\[:\&#91;:g' \
 	-e 's:\]:\&#93;:g' \
 	-e 's:(\&ndash;|–):\&#150;:g' \
 	-e 's:(\&mdash;|—):\&#151;:g' \
 	-e "s:(‘|’):':g" \
-	-e 's:(\&ldquo;|\&rdquo;|\&quot;|“|”):":g' \
+	-e 's:(\&ldquo;|\&rdquo;|\&quot;|“|”|\&#8220;|\&#8221;):":g' \
 	-e 's:\\ &\ :\\ &amp;\ :g' \
 	-e 's:µ:\&#181;:g' \
 	-e 's:ª:\&ordf;:g' \
@@ -219,6 +220,7 @@ fi
 	-e 's:\&upsih;:\&#978;:g' \
 	-e 's:\&piv;:\&#982;:g' \
 	-e 's:\&hellip;:\.\.\.:g' \
+	-e 's:(</?[a-z][a-z0-9]*[^<>]*) (id|name)="[^"]*"([^<>]*>):\1\3:g' \
 	"$i" > "${i}.bak"
 	mv "${i}.bak" "$i"
 #Por omision agregamos las etiquetas <font> estandar
@@ -229,6 +231,7 @@ fi
 	-e 's:<p[^>]*>:&<font face=\"verdana\" size=\"2\">:g' \
 	-e 's:<\/p>:<\/font><\/p>:g'\
 	-e 's:<p[^>]*><font[^>]*>\&nbsp;</font></p>:<p>\&nbsp;</p>:g' \
+	-e 's:<[a-z][a-z0-9]*[^>]*>\s*</[a-z][a-z0-9]*>::g' \
 	"$i" > "${i}.bak" 
 	mv "${i}.bak" "$i"
 #Limpiando pantalla

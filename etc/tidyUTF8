@@ -7,7 +7,9 @@ show-errors: 6
 quiet: true
 quote-marks: false
 numeric-entities: false
+hide-comments: true
 doctype: "-//W3C//DTD HTML 4.01//EN"
 input-encoding: utf8
 enclose-block-text: true
+enclose-text: true
 preserve-entities: true
