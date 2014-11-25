@@ -45,7 +45,6 @@ fi
 	-e 's:<!DOCTYPE[^>]*>::g' \
 	-e 's:<html[^>]*>:<html>:g' \
 	-e 's:<body[^>]*>:<body>:g' \
-	-e 's:<!--.[^-]-->::g' \
 	-e 's:<meta[^>]*>::g' \
 	-e 's:<style[^>]*>.*<\/style>::g' \
 	-e 's:<script[^>]*>.*<\/script>::g' \
