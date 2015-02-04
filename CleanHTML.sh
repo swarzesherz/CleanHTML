@@ -25,6 +25,9 @@ for i in $(find ./ | egrep "\/body\/(.*)\.(htm|html)$"); do
 	FILE_DIR=`dirname "$i"`
 	FIME_NAME=`echo "$i" | sed "s:$FILE_DIR\/::g"`
 	echo "Limpiando contenido del archivo $FIME_NAME"
+sed -E -e 's:</?super[^>]*>::g' \
+	"$i" > "${i}.bak"
+	mv "${i}.bak" "$i"
 #Verificando codificación del arhivo
 if file --mime "$i" | egrep "charset=utf\-8" > /dev/null; then
 	tidy -config "$WORKPATH/etc/tidyUTF8" -m "$i"
@@ -53,7 +56,6 @@ fi
 	-e 's:</?dir[^>]*>::g' \
 	-e 's:</?o\:p[^>]*>::g' \
 	-e 's:</?span[^>]*>::g' \
-	-e 's:</?super[^>]*>::g' \
 	-e 's:</?div[^>]*>::g' \
 	-e 's:<div[^>]*>:<p>:g' \
 	-e 's:<\/div>:<\/p>:g' \
