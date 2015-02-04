@@ -26,6 +26,7 @@ for i in $(find ./ | egrep "\/body\/(.*)\.(htm|html)$"); do
 	FIME_NAME=`echo "$i" | sed "s:$FILE_DIR\/::g"`
 	echo "Limpiando contenido del archivo $FIME_NAME"
 sed -E -e 's:</?super[^>]*>::g' \
+	-e 's:</?o\:p[^>]*>::g' \
 	"$i" > "${i}.bak"
 	mv "${i}.bak" "$i"
 #Asignando permisos de ejecución
