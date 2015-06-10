@@ -27,6 +27,7 @@ for i in $(find ./ | egrep "\/body\/(.*)\.(htm|html)$"); do
 	echo "Limpiando contenido del archivo $FIME_NAME"
 sed -E -e 's:</?super[^>]*>::g' \
 	-e 's:</?o\:p[^>]*>::g' \
+	-e 's:\&#150;:–:g' \
 	"$i" > "${i}.bak"
 	mv "${i}.bak" "$i"
 #Verificando codificación del arhivo
@@ -71,7 +72,6 @@ fi
 	-e 's:(</?[a-z][a-z0-9]*[^<>]*) (id|name)="[^"]*"([^<>]*>):\1\3:g' \
 	-e 's:\[:\&#91;:g' \
 	-e 's:\]:\&#93;:g' \
-	-e 's:(\&ndash;|–):\&#150;:g' \
 	-e 's:(\&mdash;|—):\&#151;:g' \
 	-e "s:(‘|’):':g" \
 	-e 's:(\&ldquo;|\&rdquo;|\&quot;|“|”|\&#8220;|\&#8221;):":g' \
