@@ -43,8 +43,8 @@ fi
 #Limpiando HTML
 	cat "${i}.bak" | \
 	sed -E -e 's:\ >:>:g' \
-	-e 's:</?[A-Z][A-Z0-9]*[^<>]*>:\L&:g' \
 	-e 's:<!DOCTYPE[^>]*>::g' \
+	-e 's:</?[A-Z][A-Z0-9]*[^<>]*>:\L&:g' \
 	-e 's:<html[^>]*>:<html>:g' \
 	-e 's:<body[^>]*>:<body>:g' \
 	-e 's:<meta[^>]*>::g' \
@@ -69,7 +69,7 @@ fi
 	-e 's:<\/strong>:<\/b>:g' \
 	-e 's:<em[^>]*>:<i>:g' \
 	-e 's:<\/em>:<\/i>:g' \
-	-e 's:(</?[a-z][a-z0-9]*[^<>]*) (id|name)="[^"]*"([^<>]*>):\1\3:g' \
+	-e 's:(</?[a-z][a-z0-9]*[^<>]*) (id)="[^"]*"([^<>]*>):\1\3:g' \
 	-e 's:\[:\&#91;:g' \
 	-e 's:\]:\&#93;:g' \
 	-e 's:(\&mdash;|—):\&#151;:g' \
@@ -219,7 +219,6 @@ fi
 	-e 's:\&upsih;:\&#978;:g' \
 	-e 's:\&piv;:\&#982;:g' \
 	-e 's:\&hellip;:\.\.\.:g' \
-	-e 's:(</?[a-z][a-z0-9]*[^<>]*) (id|name)="[^"]*"([^<>]*>):\1\3:g' \
 	"$i" > "${i}.bak"
 	mv "${i}.bak" "$i"
 #Por omision agregamos las etiquetas <font> estandar
@@ -230,7 +229,7 @@ fi
 	-e 's:<p[^>]*>:&<font face="verdana" size="2">:g' \
 	-e 's:</p>:</font></p>:g'\
 	-e 's:<p[^>]*><font[^>]*>\&nbsp;</font></p>:<p>\&nbsp;</p>:g' \
-	-e 's:<([a-z][a-z0-9]*)[^>]*>\s*</\1>::g' \
+	-e 's:<(p|font|b|i|sup|sub)[^>]*>\s*</\1>::g' \
 	"$i" > "${i}.bak" 
 	mv "${i}.bak" "$i"
 #Limpiando pantalla
