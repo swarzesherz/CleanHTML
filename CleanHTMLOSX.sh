@@ -230,11 +230,11 @@ fi
 	sed -E -e 's:<!DOCTYPE[^>]*>::g' \
 	-e 's:</?font[^<>]*>::g' \
 	-e 's:(<p[^>]*( align="[^"]+")[^>]*>)|(<p[^>]*>):<p\2>:g' \
-	-e 's:<p>:<p align=\"justify\">:g' \
-	-e 's:<p[^>]*>:&<font face=\"verdana\" size=\"2\">:g' \
-	-e 's:<\/p>:<\/font><\/p>:g'\
+	-e 's:<p>:<p align="justify">:g' \
+	-e 's:<p[^>]*>:&<font face="verdana" size="2">:g' \
+	-e 's:</p>:</font></p>:g'\
 	-e 's:<p[^>]*><font[^>]*>\&nbsp;</font></p>:<p>\&nbsp;</p>:g' \
-	-e 's:<[a-z][a-z0-9]*[^>]*>\s*</[a-z][a-z0-9]*>::g' \
+	-e 's:<([a-z][a-z0-9]*)[^>]*>\s*</\1>::g' \
 	"$i" > "${i}.bak" 
 	mv "${i}.bak" "$i"
 #Limpiando pantalla
